@@ -1,0 +1,310 @@
+﻿drop table yeyak;
+drop table doc_sc;
+drop table doctor;
+drop table hos_admin;
+drop table hos_dept;
+drop table patient;
+
+
+create table patient(
+id varchar(20) primary key not null, 
+passwd varchar(20) not null,
+name varchar(20) not null, 
+age int, 
+month int, 
+day int, 
+email varchar(50), 
+gen char(1),
+phone varchar(20), 
+zipcode char(7),
+address varchar(50),
+job varchar(20)) charset=utf8;
+
+insert into patient values('abc','123','홍길동',30,10,11,
+'abcd@kic.com','남','010-1111-1111',05561,
+'서울시 강서구 화곡동 111-11','개발자');
+insert into patient values('efg','123','김마리',25,8,9,
+'efg@kic.com','여','010-1111-1111',05563,
+'서울시 도봉구 도봉동 111-11','웹 디자이너');
+
+
+create table hos_dept(
+no int primary key not null, 
+name varchar(20) not null) charset=utf8;
+
+insert into hos_dept values(101,'내과');
+insert into hos_dept values(102,'외과');
+insert into hos_dept values(103,'안과');
+insert into hos_dept values(104,'치과');
+insert into hos_dept values(105,'소아과');
+
+
+create table hos_admin(
+id varchar(20) primary key not null, 
+passwd varchar(20) not null, 
+name varchar(20) not null) charset=utf8;
+
+insert into hos_admin values('admin','123','관리맨');
+
+
+create table doctor(
+id varchar(20) primary key not null, 
+passwd varchar(20) not null, 
+dept_no int not null, 
+name varchar(20), 
+birth int, 
+email varchar(40), 
+gen char(1), 
+phone varchar(20), zipcode char(7),
+address varchar(50),
+image varchar(50),
+ok char(1) default 'F',
+constraint hos_dept_no_fk foreign key(dept_no) references hos_dept(no)) charset=utf8;
+
+insert into doctor values('doc1','123',101,'김내과',840305,
+'doc1@kic.com','남','01011111111','05562',
+'서울 강남구 역삼동 333', 'image1.jpg','T');
+insert into doctor values('doc2','123',101,'김외과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc3','123',102,'김외과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc4','123',102,'이외과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc5','123',103,'김안과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc6','123',103,'이안과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc7','123',104,'김치과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc8','123',104,'이치과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc9','123',105,'김소아과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+insert into doctor values('doc10','123',105,'이소아과',890305,
+'doc2@kic.com','여','01011111111','05562',
+'서울 강북구 삼양동 333', 'image2.jpg','T');
+
+update doctor set image = 'image1.jpg' where id='doc1';
+update doctor set image = 'image2.jpg' where id='doc2';
+update doctor set image = 'image3.jpg' where id='doc3';
+update doctor set image = 'image4.jpg' where id='doc4';
+update doctor set image = 'image5.jpg' where id='doc5';
+update doctor set image = 'image6.jpg' where id='doc6';
+update doctor set image = 'image7.jpg' where id='doc7';
+update doctor set image = 'image8.jpg' where id='doc8';
+update doctor set image = 'image9.jpg' where id='doc9';
+update doctor set image = 'image10.jpg' where id='doc10';
+
+
+
+create table doc_sc(no int primary key auto_increment not null,
+doc_id varchar(20) not null,
+date date,
+time varchar(5),
+state char(1),
+constraint doctor_id_fk foreign key(doc_id) references doctor(id)) 
+charset=utf8;
+
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','09:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','10:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','11:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','12:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','13:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','14:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','15:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','16:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','17:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-20','18:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','09:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','10:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','11:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','12:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','13:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','14:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','15:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','16:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','17:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-21','18:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','09:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','10:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','11:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','12:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','13:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','14:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','15:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','16:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','17:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc1','2018-09-22','18:00','F');
+
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','09:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','10:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','11:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','12:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','13:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','14:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','15:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','16:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','17:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-20','18:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','09:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','10:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','11:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','12:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','13:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','14:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','15:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','16:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','17:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-21','18:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','09:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','10:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','11:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','12:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','13:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','14:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','15:00','T');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','16:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','17:00','F');
+insert into doc_sc(doc_id,date,time,state) 
+values('doc2','2018-09-22','18:00','F');
+
+
+create table yeyak(
+no int primary key auto_increment not null, 
+dept_no int not null, 
+pat_id varchar(20) not null, 
+doc_id varchar(20) not null, 
+sc_no int not null, 
+detail varchar(256), 
+state varchar(8), 
+cost int default 8200, 
+constraint fk_hos_dept_no foreign key(dept_no) 
+references hos_dept(no), 
+constraint patient_id_fk foreign key(pat_id) 
+references patient(id), 
+constraint fk_doctor_id foreign key(doc_id) 
+references doctor(id), 
+constraint doc_sc_no_fk foreign key(sc_no) 
+references doc_sc(no)) charset=utf8;
+
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'abc','doc1',1,'머리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'efg','doc1',3,'다리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'abc','doc1',11,'머리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'efg','doc1',13,'다리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'abc','doc1',21,'머리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'efg','doc1',23,'다리 아픔','1');
+
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'abc','doc2',35,'머리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'efg','doc2',37,'다리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'abc','doc2',45,'머리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'efg','doc2',47,'다리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'abc','doc2',55,'머리 아픔','1');
+insert into yeyak(dept_no,pat_id,doc_id,sc_no,detail,state)
+values(101,'efg','doc2',57,'다리 아픔','1');
+
+
+CREATE TABLE qna (
+   `num` INT(5) NOT NULL,
+   `name` VARCHAR(20) NOT NULL,
+   `pass` VARCHAR(20) NOT NULL,
+   `mail` VARCHAR(30) NULL DEFAULT NULL,
+   `title` VARCHAR(50) NULL DEFAULT NULL,
+   `cont` TEXT NULL DEFAULT NULL,
+   `bip` VARCHAR(20) NULL DEFAULT NULL,
+   `bdate` VARCHAR(20) NULL DEFAULT NULL,
+   `readcnt` INT(3) NULL DEFAULT NULL,
+   `gnum` INT(5) NULL DEFAULT NULL,
+   `onum` INT(3) NULL DEFAULT NULL,
+   `nested` INT(3) NULL DEFAULT NULL,
+   PRIMARY KEY (`num`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+insert into qna values(1,'한국인','123','abc@abc.com','예약취소 문의', '예약취소 어떻게 하나요???','0:0:0:0:0:0:0:1','2018-9-21',0,1,0,0);
+insert into qna values(2,'고길동','123','efg@efg.com','예약수정 문의', '예약수정 어떻게 하나요??','0:0:0:0:0:0:0:1','2018-9-21',0,2,0,0);
+insert into qna values(3,'고길동','123','efg@efg.com','치과 김의사 선생님', '진료가 너무 좋았어요~~~~~!
+ㅎㅎㅎㅎ','0:0:0:0:0:0:0:1','2018-9-20',0,3,0,0);
+insert into qna values(4,'김의사','123','qwer@qwer.com','[Re:]:치과 김의사 선생님', '치과 김의사입니다.
+진료에 만족하셨다니 다행입니다.^^
+다음 진료때도 함께 해요~','0:0:0:0:0:0:0:1','2018-9-20',0,3,2,1);
+insert into qna values(5,'고길동','123','efg@efg.com','[Re:]:[Re:]:치과 김의사 선생님', '헉 답장까지...최고','0:0:0:0:0:0:0:1','2018-9-20',0,3,3,2);
